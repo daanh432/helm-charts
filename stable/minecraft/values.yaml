@@ -170,8 +170,8 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "csi-cephfs"
-#  storageClass: "rook-ceph-block"
+#  storageClass: "csi-cephfs"
+  storageClass: "rook-ceph-block"
   dataDir:
     # Set this to false if you don't care to persist state between restarts.
     enabled: true
