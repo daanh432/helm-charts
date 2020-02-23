@@ -32,8 +32,8 @@ livenessProbe:
     - localhost:25565
     - status
   initialDelaySeconds: 300
-  periodSeconds: 5
-  failureThreshold: 10
+  periodSeconds: 10
+  failureThreshold: 15
   successThreshold: 1
   timeoutSeconds: 1
 readinessProbe:
@@ -41,9 +41,9 @@ readinessProbe:
     - mcstatus
     - localhost:25565
     - status
-  initialDelaySeconds: 300
-  periodSeconds: 5
-  failureThreshold: 10
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 15
   successThreshold: 1
   timeoutSeconds: 1
 minecraftServer:
