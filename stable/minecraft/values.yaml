@@ -1,6 +1,7 @@
 # ref: https://hub.docker.com/r/itzg/minecraft-server/
 image: itzg/minecraft-server
 imageTag: latest
+namespace: default
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/

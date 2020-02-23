@@ -3,9 +3,9 @@ entries:
   minecraft:
   - apiVersion: v1
     appVersion: 1.15.2
-    created: "2020-02-23T11:58:39.288902919Z"
+    created: "2020-02-23T12:05:15.995223075Z"
     description: Minecraft server
-    digest: ffd9c74b592f3294af43d89e7b6608f127e4193d795a201e13b353c066731da1
+    digest: 30e4fda5c6be9a7a4111f5827f513c6378415f970ee3cf83753da3ed6ec2bc79
     home: https://minecraft.net/
     keywords:
     - game
@@ -28,7 +28,7 @@ entries:
     version: 1.1.9
   - apiVersion: v1
     appVersion: 1.15.2
-    created: "2020-02-23T11:58:39.288077954Z"
+    created: "2020-02-23T12:05:15.994045272Z"
     description: Minecraft server
     digest: ba3b48468d351363b59854cd8b2c2013ab140bc8286e73ced48e8e439a117234
     home: https://minecraft.net/
@@ -51,4 +51,4 @@ entries:
     urls:
     - minecraft-1.1.8.tgz
     version: 1.1.8
-generated: "2020-02-23T11:58:39.287090119Z"
+generated: "2020-02-23T12:05:15.992748739Z"
