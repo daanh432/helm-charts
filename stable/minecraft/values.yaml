@@ -9,10 +9,10 @@ namespace: default
 resources:
   requests:
     memory: 1000Mi
-    cpu: 400m
+    cpu: 500m
   limits:
     memory: 1250Mi
-    cpu: 500m
+    cpu: 1000m
 
 nodeSelector: {}
 
