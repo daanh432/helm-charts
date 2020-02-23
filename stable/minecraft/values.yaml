@@ -31,7 +31,7 @@ livenessProbe:
     - mcstatus
     - localhost:25565
     - status
-  initialDelaySeconds: 120
+  initialDelaySeconds: 300
   periodSeconds: 5
   failureThreshold: 10
   successThreshold: 1
@@ -41,7 +41,7 @@ readinessProbe:
     - mcstatus
     - localhost:25565
     - status
-  initialDelaySeconds: 30
+  initialDelaySeconds: 300
   periodSeconds: 5
   failureThreshold: 10
   successThreshold: 1
