@@ -22,3 +22,13 @@ version: 0.1.6
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "0.0.2"
+
+# This defines if the chart is deprecated. If true, the chart is marked as deprecated and
+# will not be supported.
+deprecated: false
+
+# This is the list of maintainers for this chart. The chart maintainer is the person or persons
+maintainers:
+  - name: "daanh432"
+    email: "daan@daanhendriks.nl"
+    url: "https://daanhendriks.nl"
