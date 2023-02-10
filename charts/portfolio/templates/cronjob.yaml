@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "portfolio.fullname" . }}-scheduler
+  labels:
+    {{- include "portfolio.labels" . | nindent 4 }}
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: {{ .Chart.Name }}
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:portfolio-{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+                - php
+              args:
+                - artisan
+                - schedule:run
+              envFrom:
+                - configMapRef:
+                    name: {{ .Values.configMapRef }}
+                - secretRef:
+                    name: {{ .Values.secretRef }}
