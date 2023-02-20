@@ -44,6 +44,13 @@ service:
   type: ClusterIP
   port: 80
 
+persistence:
+  enabled: false
+  # storageClass: "-"
+  accessMode: ReadWriteMany
+  size: 1Gi
+  existingClaim: null
+
 ingress:
   enabled: false
   className: ""

@@ -55,6 +55,10 @@ spec:
             - name: http
               containerPort: {{ .Values.service.internalPort | default 9000 }}
               protocol: TCP
+          volumeMounts:
+            - mountPath: "/var/www/html/storage/app"
+              name: data
+              subPath: appStorage
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapRef }}
@@ -82,3 +86,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "portfolio.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
