@@ -64,14 +64,22 @@ spec:
                 name: {{ .Values.configMapRef }}
             - secretRef:
                 name: {{ .Values.secretRef }}
-          livenessProbe:
-            httpGet:
-              path: /
+          startupProbe:
+            tcpSocket:
               port: http
+            failureThreshold: 12
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 20
+            failureThreshold: 1
           readinessProbe:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
