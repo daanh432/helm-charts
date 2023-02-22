@@ -6,6 +6,8 @@ metadata:
     {{- include "portfolio.labels" . | nindent 4 }}
 spec:
   schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 5
   jobTemplate:
     spec:
       template:
