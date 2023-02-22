@@ -3,6 +3,20 @@ entries:
   portfolio:
   - apiVersion: v2
     appVersion: 0.0.4
+    created: "2023-02-22T13:39:52.346659968Z"
+    description: A Helm chart for my personal portfolio
+    digest: 645a3dd371fa0f60da28963daa8f465514eb2207102b42627c7c8085a3341b08
+    maintainers:
+    - email: daan@daanhendriks.nl
+      name: daanh432
+      url: https://daanhendriks.nl
+    name: portfolio
+    type: application
+    urls:
+    - https://github.com/daanh432/helm-charts/releases/download/portfolio-0.1.14/portfolio-0.1.14.tgz
+    version: 0.1.14
+  - apiVersion: v2
+    appVersion: 0.0.4
     created: "2023-02-21T12:11:09.610465914Z"
     description: A Helm chart for my personal portfolio
     digest: 6c1ab4828bace3d1541e81e97e5d3468d9b0d0ed8f649f016786cd1133765943
