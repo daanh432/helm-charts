@@ -40,6 +40,7 @@ spec:
             - artisan
             - migrate
             - --force
+            - --isolated
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapRef }}
