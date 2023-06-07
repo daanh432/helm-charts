@@ -1,2 +1,2 @@
 # helm-charts
-Collection of (customized) helm charts.
+Collection of (customized) helm charts
