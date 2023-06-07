@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "vaultwarden.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: vaultwarden
+spec:
+  serviceName: vaultwarden
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+      app.kubernetes.io/component: vaultwarden
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+        app.kubernetes.io/component: vaultwarden
+      {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha1sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha1sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      {{- end }}
+      initContainers:
+        {{- if .Values.initContainers }}
+        {{- toYaml .Values.initContainers | nindent 8 }}
+        {{- end }}
+      containers:
+        - image: {{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: vaultwarden
+          envFrom:
+            - configMapRef:
+                name: {{ include "vaultwarden.fullname" . }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "vaultwarden.fullname" .) .Values.database.existingSecret }}
+                  key: {{ default "DATABASE_URL" .Values.database.existingUriOverrideKey }}
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "vaultwarden.fullname" .) .Values.smtp.existingSecret }}
+                  key: {{ default "SMTP_USERNAME" .Values.smtp.username.existingSecretKey }}
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "vaultwarden.fullname" .) .Values.smtp.existingSecret }}
+                  key: {{ default "SMTP_PASSWORD" .Values.smtp.password.existingSecretKey }}
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "vaultwarden.fullname" .) .Values.adminToken.existingSecret }}
+                  key: {{ default "ADMIN_TOKEN" .Values.adminToken.existingSecretKey }}
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: {{ .Values.websocket.port }}
+              name: websocket
+              protocol: TCP
+          {{- if .Values.storage.enabled }}
+          volumeMounts:
+            - name: vaultwarden-data
+              mountPath: {{ .Values.storage.dataDir }}
+          {{- end }}
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1Gi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+        {{- if .Values.sidecars }}
+        {{- toYaml .Values.sidecars | nindent 8 }}
+        {{- end }}
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- end }}
+  {{- if .Values.storage.enabled }}
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  volumeClaimTemplates:
+    - metadata:
+        name: vaultwarden-data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}
+        storageClassName: {{ default "default" .Values.storage.class }}
+  {{- end }}
