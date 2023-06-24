@@ -10,7 +10,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-ah-parser:
+ahparser:
   replicaCount: 1
 
   image:
@@ -29,7 +29,7 @@ ah-parser:
 config:
   existingRef: ""
 
-  ah-parser:
+  ahparser:
     registerEnabled: false
 
 secrets:

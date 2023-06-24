@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "ah-parser.name" -}}
+{{- define "ahparser.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "ah-parser.fullname" -}}
+{{- define "ahparser.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,15 +26,15 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "ah-parser.chart" -}}
+{{- define "ahparser.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "ah-parser.labels" -}}
-helm.sh/chart: {{ include "ah-parser.chart" . }}
+{{- define "ahparser.labels" -}}
+helm.sh/chart: {{ include "ahparser.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "ah-parser.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ah-parser.name" . }}
+{{- define "ahparser.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "ahparser.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "ah-parser.serviceAccountName" -}}
+{{- define "ahparser.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "ah-parser.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "ahparser.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,21 +64,21 @@ Create the name of the service account to use
 {{/*
 Registers the config map reference
 */}}
-{{- define "ah-parser.configMapRef" -}}
+{{- define "ahparser.configMapRef" -}}
 {{- if .Values.config.existingRef }}
 {{- printf "%s" .Values.config.existingRef }}
 {{- else }}
-{{- printf "%s-config" (include "ah-parser.fullname" .) }}
+{{- printf "%s-config" (include "ahparser.fullname" .) }}
 {{- end }}
 {{- end }}
 
 {{/*
 Registers the secret reference
 */}}
-{{- define "ah-parser.secretRef" -}}
+{{- define "ahparser.secretRef" -}}
 {{- if .Values.secrets.existingRef }}
 {{- printf "%s" .Values.secrets.existingRef }}
 {{- else }}
-{{- printf "%s-secrets" (include "ah-parser.fullname" .) }}
+{{- printf "%s-secrets" (include "ahparser.fullname" .) }}
 {{- end }}
 {{- end }}

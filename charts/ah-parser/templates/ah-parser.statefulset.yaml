@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "ah-parser.fullname" . }}
+  name: {{ include "ahparser.fullname" . }}
   labels:
-    {{- include "ah-parser.labels" . | nindent 4 }}
+    {{- include "ahparser.labels" . | nindent 4 }}
 spec:
-  {{- if and (.Values.ah-parser.replicaCount) }}
-  replicas: {{ .Values.ah-parser.replicaCount }}
+  {{- if and (.Values.ahparser.replicaCount) }}
+  replicas: {{ .Values.ahparser.replicaCount }}
   {{- end }}
   {{- if .Values.revisionHistoryLimit }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ah-parser.selectorLabels" . | nindent 6 }}
+      {{- include "ahparser.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,33 +21,33 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "ah-parser.selectorLabels" . | nindent 8 }}
+        {{- include "ahparser.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "ah-parser.serviceAccountName" . }}
+      serviceAccountName: {{ include "ahparser.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: ah-parser
+        - name: ahparser
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.ah-parser.image.repository }}:ah-parser-{{ .Values.ah-parser.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.ah-parser.image.pullPolicy }}
+          image: "{{ .Values.ahparser.image.repository }}:ah-parser-{{ .Values.ahparser.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.ahparser.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.ah-parser.service.internalPort | default 3000 }}
+              containerPort: {{ .Values.ahparser.service.internalPort | default 3000 }}
               protocol: TCP
           env:
             - name: PORT
-              value: {{ .Values.ah-parser.service.internalPort | default 3000 | toString }}
+              value: {{ .Values.ahparser.service.internalPort | default 3000 | toString }}
           envFrom:
             - configMapRef:
-                name: {{ include "ah-parser.configMapRef" . }}
+                name: {{ include "ahparser.configMapRef" . }}
             - secretRef:
-                name: {{ include "ah-parser.secretRef" . }}
+                name: {{ include "ahparser.secretRef" . }}
           {{- if .Values.probesEnabled }}
           startupProbe:
             tcpSocket:
@@ -68,7 +68,7 @@ spec:
             periodSeconds: 10
           {{- end }}
           resources:
-            {{- toYaml .Values.ah-parser.resources | nindent 12 }}
+            {{- toYaml .Values.ahparser.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
