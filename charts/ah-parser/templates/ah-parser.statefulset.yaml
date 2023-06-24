@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "ahparser.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "ahparser.fullname" . }}
   {{- if and (.Values.ahparser.replicaCount) }}
   replicas: {{ .Values.ahparser.replicaCount }}
   {{- end }}
@@ -42,7 +43,7 @@ spec:
               protocol: TCP
           env:
             - name: PORT
-              value: {{ .Values.ahparser.service.internalPort | default 3000 | toString }}
+              value: {{ .Values.ahparser.service.internalPort | default 3000 | quote }}
           envFrom:
             - configMapRef:
                 name: {{ include "ahparser.configMapRef" . }}
