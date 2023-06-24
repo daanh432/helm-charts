@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ah-parser.fullname" . }}
+  labels:
+    {{- include "ah-parser.labels" . | nindent 4 }}
+spec:
+  {{- if and (.Values.ah-parser.replicaCount) }}
+  replicas: {{ .Values.ah-parser.replicaCount }}
+  {{- end }}
+  {{- if .Values.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "ah-parser.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ah-parser.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ah-parser.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: ah-parser
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.ah-parser.image.repository }}:ah-parser-{{ .Values.ah-parser.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.ah-parser.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.ah-parser.service.internalPort | default 3000 }}
+              protocol: TCP
+          env:
+            - name: PORT
+              value: {{ .Values.ah-parser.service.internalPort | default 3000 | toString }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "ah-parser.configMapRef" . }}
+            - secretRef:
+                name: {{ include "ah-parser.secretRef" . }}
+          {{- if .Values.probesEnabled }}
+          startupProbe:
+            tcpSocket:
+              port: http
+            failureThreshold: 12
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 20
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          {{- end }}
+          resources:
+            {{- toYaml .Values.ah-parser.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

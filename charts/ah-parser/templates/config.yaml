@@ -1,0 +1,10 @@
+{{- if not .Values.config.existingRef }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ah-parser.configMapRef" . }}
+  labels:
+    {{- include "ah-parser.labels" . | nindent 4 }}
+data:
+  REGISTER_ENABLED: {{ .Values.config.ah-parser.registerEnabled | quote }}
+{{- end}}

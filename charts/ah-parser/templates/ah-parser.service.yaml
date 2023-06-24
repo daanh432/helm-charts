@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ah-parser.fullname" . }}
+  labels:
+    {{- include "ah-parser.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.ah-parser.service.type }}
+  ports:
+    - port: {{ .Values.ah-parser.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "ah-parser.selectorLabels.panel" . | nindent 4 }}
