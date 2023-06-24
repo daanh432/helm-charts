@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   ah-parser:
   - apiVersion: v2
+    appVersion: 1.0.4
+    created: "2023-06-24T13:26:35.989367374Z"
+    description: A Helm chart for AH-Parser on Kubernetes
+    digest: c37d426dabffd09657f91889ffc5e17a9f8ca11f588fbe4fcba8e9e717724796
+    name: ah-parser
+    type: application
+    urls:
+    - https://github.com/daanh432/helm-charts/releases/download/ah-parser-0.1.2/ah-parser-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.0.3
     created: "2023-06-24T12:54:58.761225272Z"
     description: A Helm chart for AH-Parser on Kubernetes
@@ -242,4 +252,4 @@ entries:
     urls:
     - https://github.com/daanh432/helm-charts/releases/download/vaultwarden-0.1.0/vaultwarden-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-24T12:54:58.761268472Z"
+generated: "2023-06-24T13:26:35.989440579Z"
