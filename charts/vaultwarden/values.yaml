@@ -1,4 +1,3 @@
-
 ## @section Vaultwarden settings
 ##
 image:
@@ -101,7 +100,6 @@ fullnameOverride: ""
 serviceAccount:
   create: true
   name: "vaultwarden-svc"
-
 
 ## @section Exposure Parameters
 ##
