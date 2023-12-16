@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "gitIgnoredAuthors": ["github-actions@github.com"],
   "prHourlyLimit": 0,
   "commitMessageAction": "{{{updateType}}} update",
   "semanticCommits": "enabled",
