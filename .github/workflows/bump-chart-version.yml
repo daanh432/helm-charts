@@ -32,6 +32,8 @@ jobs:
       - name: Commit Changes
         run: |
           echo ${{ github.ref_name }}
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git commit -a -m 'chore(deps): updated chart ${{ matrix.charts }}' || echo "Nothing to commit"
 
       - name: Push Changes
