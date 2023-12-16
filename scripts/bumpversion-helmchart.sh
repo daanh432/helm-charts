@@ -9,7 +9,7 @@ if [[ -z "${BUMP+x}" ]]; then
   BUMP=$(echo "$MESSAGE" | grep -Po '(?<=^chore\(deps\): )(patch|major|minor)')
 fi
 
-VERSION=$(./scripts/semver bump "${BUMP}" "$(yq -e ".version" < ./charts/"${CHART}"/Chart.yaml)")
+VERSION=$(./scripts/semver.sh bump "${BUMP}" "$(yq -e ".version" < ./charts/"${CHART}"/Chart.yaml)")
 yq -e -i ".version = \"${VERSION}\"" ./charts/"${CHART}"/Chart.yaml
 
 # File sourced from https://github.com/bukowa/charts/blob/174776759718e124770c698534823068a62ab498/scripts/bumpversion-helmchart.sh
