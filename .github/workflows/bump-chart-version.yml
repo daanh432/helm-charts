@@ -26,6 +26,7 @@ jobs:
           CHART: ${{ matrix.charts }}
           MESSAGE: ${{ github.event.head_commit.message }}
         run: |
+          echo "Bumping $CHART"
           ./scripts/bumpversion-helmchart.sh
 
       - name: Commit Changes
@@ -58,10 +59,6 @@ jobs:
           files: |
             charts/**
           json: true
-
-      - name: Echo changed charts
-        run: |
-          echo "${{ steps.changed-files-specific.outputs }}"
 
       - id: set-matrix
         if: steps.changed-files-specific.outputs.any_changed == 'true'
