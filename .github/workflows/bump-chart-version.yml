@@ -53,11 +53,15 @@ jobs:
 
       - name: Check changed charts
         id: changed-files-specific
-        uses: tj-actions/changed-files@v32.1.1
+        uses: tj-actions/changed-files@v40
         with:
           files: |
             charts/**
           json: true
+
+      - name: Echo changed charts
+        run: |
+          echo "${{ steps.changed-files-specific.outputs }}"
 
       - id: set-matrix
         if: steps.changed-files-specific.outputs.any_changed == 'true'
