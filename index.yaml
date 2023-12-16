@@ -231,6 +231,29 @@ entries:
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.28.1
+    created: "2023-12-16T19:57:42.937786286Z"
+    description: vaultwarden is an unofficial Bitwarden-compatible server written
+      in Rust
+    digest: 5334e5af00a93eb1c8a3e9fd32e7c5752b78efbec7f8432d0b3606880603ece9
+    keywords:
+    - Rust
+    - vaultwarden
+    maintainers:
+    - email: guerzon@proton.me
+      name: Lester Guerzon
+      url: https://github.com/guerzon
+    - email: daan@daanhendriks.nl
+      name: daanh432
+      url: https://daanhendriks.nl
+    name: vaultwarden
+    sources:
+    - https://github.com/guerzon/vaultwarden
+    - https://github.com/dani-garcia/vaultwarden
+    urls:
+    - https://github.com/daanh432/helm-charts/releases/download/vaultwarden-0.2.0/vaultwarden-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.28.1
     created: "2023-06-07T17:44:59.582597148Z"
     description: vaultwarden is an unofficial Bitwarden-compatible server written
       in Rust
@@ -252,4 +275,4 @@ entries:
     urls:
     - https://github.com/daanh432/helm-charts/releases/download/vaultwarden-0.1.0/vaultwarden-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-24T13:26:35.989440579Z"
+generated: "2023-12-16T19:57:42.937830679Z"
