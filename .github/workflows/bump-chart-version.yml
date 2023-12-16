@@ -39,6 +39,7 @@ jobs:
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
+          github_token: "${{ secrets.GIT_SECRET }}"
           branch: "${{ github.ref_name }}"
 
   changed-files:
