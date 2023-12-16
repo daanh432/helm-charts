@@ -3,7 +3,7 @@ name: Bump Chart Versions
 on:
   push:
     branches:
-      - 'renovate/**'
+      - "renovate/**"
 
 jobs:
   update-chart-versions:
@@ -21,6 +21,11 @@ jobs:
         with:
           fetch-depth: 0
           token: "${{ secrets.GIT_SECRET }}"
+
+      - name: Set Git Config
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       - name: Bump Chart Version
         env:
