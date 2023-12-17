@@ -35,7 +35,7 @@ spec:
         - name: ahparser
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.ahparser.image.repository }}:ah-parser-{{ .Values.ahparser.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.ahparser.image.repository }}:{{ .Values.ahparser.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.ahparser.image.pullPolicy }}
           ports:
             - name: http
