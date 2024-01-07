@@ -8,6 +8,7 @@ sources:
   - https://github.com/guerzon/vaultwarden
   - https://github.com/dani-garcia/vaultwarden
 appVersion: 1.28.1
+deprecated: true
 maintainers:
   - name: Lester Guerzon
     email: guerzon@proton.me
@@ -15,4 +16,4 @@ maintainers:
   - name: "daanh432"
     email: "daan@daanhendriks.nl"
     url: "https://daanhendriks.nl"
-version: 0.2.0
+version: 0.2.1
